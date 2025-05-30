@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const userModel=require('./users');
 const passport = require('passport');
-const localStrategy = require('passport-local');
+const localStrategy = require('passport-local').Strategy;
 
 passport.use( new localStrategy(userModel.authenticate())); // authenticate user using passport-local strategy
 
@@ -10,33 +10,24 @@ passport.use( new localStrategy(userModel.authenticate())); // authenticate user
 router.get('/', function(req, res) {
   res.render('index');
 });
-
-router.get("/create", async function(req,res){
-
-  const newUser=await userModel.create({
-    username: "Bot3",
-    nickname: "Botguy3",
-    description: "Life would be better with she here",
-    categories: ['Hack','scam'],
-    dateCreated: new Date() // current date and time
-  }) 
- 
-  res.send(newUser);
+//profile page
+router.get("/profile",isLoggedIn, function(req,res){
+  res.render("profile");
 });
 
+
 //register a new user
-router.post("/register", function(req,res){
-  var userdata = new userModel({
-    username:String,
-    secret:String
-  })
+router.post('/register', function(req, res) {
 
-userModel.register(userdata,req.body.password).then(function(registereduser){
-  passport.authenticate("local")(req,res,function(){
-    res.redirect("/profile");
-  })
-})
-
+  var userData =new userModel({
+    username: req.body.username,
+    secret: req.body.secret
+  });
+userModel.register(userData,req.body.password).then(function(registeredUser) {
+    passport.authenticate('local')(req, res, function() {
+       res.redirect('/profile');
+    });
+  });
 });
 
 //login a user
@@ -47,17 +38,30 @@ router.post("/login",passport.authenticate("local",{
   //this function is not used, but required by passport
 });
 
-//profile page
-router.get("/profile",isLoggedIn, function(req,res){
-  res.send("Welcome to your profile page, ");
-});
+
 //logout a user
 router.get("/logout", function(req,res,next){
   req.logout(function(err) {
     if (err) { return next(err); }
+  
     res.redirect('/');
   });
 })
+
+
+
+router.get("/create", async function(req,res){
+
+  const newUser=await userModel.create({
+    username: "Bot3",
+    nickname: "Botguy3",
+    description: "Life would be better with she here",
+    categories: ['Hack','scam'],
+    dateCreated: new Date() // current date and time
+  });
+
+  res.send(newUser);
+});
 
 //isLoggedIn
 function isLoggedIn(req,res,next){

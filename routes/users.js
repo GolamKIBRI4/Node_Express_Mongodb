@@ -1,24 +1,21 @@
+const mongoose = require('mongoose');
+const plm = require('passport-local-mongoose');
 
-const mongoose= require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
-mongoose.connect('mongodb://localhost:27017/testingendgame2')
+mongoose.connect('mongodb+srv://golamkibria:1234@cluster0.dd3t8ro.mongodb.net/allusers?retryWrites=true&w=majority&appName=Cluster0')
+  .then(() => {
+    console.log('✅ Connected to MongoDB Atlas');
+  })
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+  });
+
 const userSchema=mongoose.Schema({
   username:String,
-  nickname:String,
-  description:String,
- 
-  categories:{
-    type:Array,
-    default: []
-    
-  },
-  dateCreated:{
-    type:Date,
-    default: Date.now
-  }
+  password:String,
+  secret:String,
 
 
 })
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(plm);
 
 module.exports= mongoose.model('user',userSchema);

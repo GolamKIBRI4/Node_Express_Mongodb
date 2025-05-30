@@ -8,23 +8,26 @@
  
   </head>
   
- <div style="display: flex;align-items: center; justify-content: center; flex-direction: column; height: 100vh;">
-  <h1 style="margin-bottom: 30px;font-size: 60px; font-weight: lighter; color:rgb(109, 109, 109); white-space: nowrap;">This Is The Login Page</h1> 
-  <form>
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
-    </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary" style="background-color: rgb(109, 109, 109); border-inline: none;border-inline-end: none;">Submit</button>
-   </form>
- </div>
+ <body>
+  
+   <div style="display: flex;align-items: center; justify-content: center; flex-direction: column; height: 100vh;">
+    <h1 style="margin-bottom: 30px;font-size: 60px; font-weight: lighter; color:rgb(109, 109, 109); white-space: nowrap;">Please Register</h1>
+    <form action="/register" method="post">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">username</label>
+        <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your detail with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">password</label>
+        <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+      </div>
+          <div class="mb-3">
+        <label for="exampleInputSecret2" class="form-label">secret</label>
+        <input name="secret" type="text" class="form-control" id="exampleInputSecret2">
+      </div>
+      <button type="submit" class="btn btn-primary" style="background-color: rgb(109, 109, 109); border-inline: none;border-inline-end: none;">Submit</button>
+     </form>
+   </div>
+ </body>
 </html>

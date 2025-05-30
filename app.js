@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const passport = require('passport');
 var expressSession = require('express-session');
-var flash=require('connect-flash');
+
 var app = express();
 
 // view engine setup
@@ -16,18 +16,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(expressSession({    //allows session management
-  secret: 'your-secret-key',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+   secret: 'everything is secret'
 }));
+
 app.use(passport.initialize()); // initializes passport
 app.use(passport.session()); // allows passport to use session management
 // serializeUser and deserializeUser are used to manage user sessions
-// userRouter represents the user.js file that actually export userModel in the routes directory
-passport.serializeUser(usersRouter.serializeUser);
-passport.deserializeUser(usersRouter.deserializeUser);
-
-app.use(flash());
+passport.serializeUser(usersRouter.serializeUser());
+passport.deserializeUser(usersRouter.deserializeUser());
 
 app.use(logger('dev'));
 app.use(express.json());
